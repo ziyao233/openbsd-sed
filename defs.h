@@ -138,3 +138,7 @@ typedef struct {
  */
 #define ROUNDLEN(x) \
     (((x) + _POSIX2_LINE_MAX - 1) & ~(_POSIX2_LINE_MAX - 1))
+#define DEFFILEMODE \
+    (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
+#define ALLPERMS \
+    (S_ISUID|S_ISGID|S_ISTXT|S_IRWXU|S_IRWXG|S_IRWXO)

@@ -101,7 +101,7 @@ strregerror(int errcode, regex_t *preg)
 /*
  * Error reporting function
  */
-__dead void
+__attribute__((noreturn)) void
 error(const char *fmt, ...)
 {
 	va_list ap;

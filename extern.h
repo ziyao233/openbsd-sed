@@ -49,7 +49,7 @@ void	 cfclose(struct s_command *, struct s_command *);
 void	 compile(void);
 void	 cspace(SPACE *, const char *, size_t, enum e_spflag);
 char	*cu_getline(char **, size_t *);
-__dead void error(const char *, ...) __attribute__((__format__ (printf, 1, 2)));
+__attribute__((noreturn)) void error(const char *, ...) __attribute__((__format__ (printf, 1, 2)));
 void	warning(const char *, ...) __attribute__((__format__ (printf, 1, 2)));
 int	 mf_getline(SPACE *, enum e_spflag);
 int	 lastline(void);

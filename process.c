@@ -527,8 +527,9 @@ regexec_e(regex_t *preg, const char *string, int eflags,
 	match[0].rm_so = start;
 	match[0].rm_eo = stop;
 
+	/* FIXME: REG_STARTEND isn't present on musl-libc */
 	eval = regexec(defpreg, string,
-	    nomatch ? 0 : maxnsub + 1, match, eflags | REG_STARTEND);
+	    nomatch ? 0 : maxnsub + 1, match, eflags /* | REG_STARTEND */);
 	switch (eval) {
 	case 0:
 		return (1);

@@ -38,16 +38,16 @@
 #include <sys/stat.h>
 
 #include <ctype.h>
-#include <err.h>
+#include <bsd/err.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
 #include <regex.h>
 #include <stddef.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <bsd/stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#include <bsd/unistd.h>
 #include <libgen.h>
 
 #include "defs.h"
@@ -165,14 +165,6 @@ main(int argc, char *argv[])
 	else
 		termwidth -= 8;
 
-	if (inplace != NULL) {
-		if (pledge("stdio rpath wpath cpath fattr chown", NULL) == -1)
-			err(1, "pledge");
-	} else {
-		if (pledge("stdio rpath wpath cpath", NULL) == -1)
-			err(1, "pledge");
-	}
-
 	/* First usage case; script is the first arg */
 	if (!eflag && !fflag && *argv) {
 		add_compunit(CU_STRING, *argv);
@@ -183,23 +175,9 @@ main(int argc, char *argv[])
 
 	/* Continue with first and start second usage */
 	if (*argv) {
-		if (!pledge_wpath && inplace == NULL) {
-			if (pledge("stdio rpath", NULL) == -1)
-				err(1, "pledge");
-		}
 		for (; *argv; argv++)
 			add_file(*argv);
 	} else {
-		if (!pledge_wpath && !pledge_rpath) {
-			if (pledge("stdio", NULL) == -1)
-				err(1, "pledge");
-		} else if (pledge_rpath) {
-			if (pledge("stdio rpath", NULL) == -1)
-				err(1, "pledge");
-		} else if (pledge_wpath) {
-			if (pledge("stdio wpath cpath", NULL) == -1)
-				err(1, "pledge");
-		}
 		add_file(NULL);
 	}
 	process();
